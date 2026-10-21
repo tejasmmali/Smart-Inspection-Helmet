@@ -14,13 +14,18 @@ A smart helmet project that uses computer vision to read analog gauges and monit
 
 * [x] Set up Python environment
 * [x] Capture webcam video using OpenCV
-* [x] Achieve 20+ FPS
-* [ ] Detect analog gauges
-* [ ] Detect needle position
-* [ ] Calculate gauge readings
-* [ ] Create a dashboard
+* [x] Configure webcam at 640×480 using MJPEG
+* [x] Detect gauge circle and estimate its center and radius
+* [x] Implement initial line detection using OpenCV
+* [x] Filter lines to identify possible needle candidates
+* [ ] Improve needle detection accuracy
+* [ ] Calculate needle angle reliably
+* [ ] Convert angle into gauge readings
+* [ ] Test readings with live webcam footage
+* [ ] Store readings for monitoring
 * [ ] Deploy on RDK X5
-* [ ] Test accuracy and performance
+* [ ] Integrate hardware into the helmet
+
 
 ## Tech Stack
 
