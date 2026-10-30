@@ -2,7 +2,7 @@ import cv2
 import math
 import numpy as np
 
-image = cv2.imread("gauge.jpg")
+image = cv2.imread("gauge4.jpg")
 
 if image is None:
     raise FileNotFoundError("Could not load gauge.jpg")
