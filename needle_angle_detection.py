@@ -87,7 +87,7 @@ def detect_gauge_circle(gray):
 
     return int(cx), int(cy), int(radius)
 
-
+ 
 def detect_needle_angle(gray, cx, cy, radius):
 
     height, width = gray.shape
@@ -106,6 +106,8 @@ def detect_needle_angle(gray, cx, cy, radius):
             170
         )
     )
+
+    
 
     dark = (
         blurred < threshold_value

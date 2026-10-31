@@ -312,7 +312,7 @@ a { color: var(--accent); }
     <div id="updated"></div>
 </section>
 </main>
-
+ 
 <script>
 let pressureChart = null;
 
