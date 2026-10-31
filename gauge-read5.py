@@ -204,7 +204,7 @@ cv2.circle(
     -1
 )
 
-#show candidate lines n select the needle 
+
 print("Candidate lines:", len(candidates))
 
 if best_candidate is not None:
@@ -223,7 +223,7 @@ if best_candidate is not None:
 else:
     print("No suitable needle candidate found.")
 
-# Display the processing results
+
 cv2.imshow("Original Gauge", image)
 cv2.imshow("Detected Gauge and Needle", result)
 cv2.imshow("Gauge Edges", edges)

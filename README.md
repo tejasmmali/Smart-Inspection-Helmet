@@ -18,9 +18,9 @@ A smart helmet project that uses computer vision to read analog gauges and monit
 * [x] Detect gauge circle and estimate its center and radius
 * [x] Implement initial line detection using OpenCV
 * [x] Filter lines to identify possible needle candidates
-* [ ] Improve needle detection accuracy
-* [ ] Calculate needle angle reliably
-* [ ] Convert angle into gauge readings
+* [x] Improve needle detection accuracy
+* [x] Calculate needle angle reliably
+* [x] Convert angle into gauge readings
 * [ ] Test readings with live webcam footage
 * [ ] Store readings for monitoring
 * [ ] Deploy on RDK X5
