@@ -21,7 +21,7 @@ A smart helmet project that uses computer vision to read analog gauges and monit
 * [x] Improve needle detection accuracy
 * [x] Calculate needle angle reliably
 * [x] Convert angle into gauge readings
-* [ ] Test readings with live webcam footage
+* [x] Test readings with live webcam footage
 * [ ] Store readings for monitoring
 * [ ] Deploy on RDK X5
 * [ ] Integrate hardware into the helmet
