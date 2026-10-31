@@ -5,6 +5,7 @@ import argparse
 import time
 import sys
 from collections import deque
+from monitoring import publish_frame, start_monitoring_server, save_reading
 
 # gauge settings
 MIN_VALUE = 0.0
@@ -54,7 +55,6 @@ def valid_angle_mask():
 
 
 VALID_ANGLES = valid_angle_mask()
-
 
 def detect_gauge_circle(gray, prev_circle=None):
 
@@ -489,6 +489,51 @@ def put_text(display, text, y, color, scale=0.7):
                 scale, color, 2, cv2.LINE_AA)
 
 
+
+def validate_gauge_face(gray, cx, cy, radius):
+    height, width = gray.shape
+    edges = cv2.Canny(cv2.GaussianBlur(gray, (5, 5), 0), 45, 120)
+    angles = np.deg2rad(np.arange(360))
+    rim_hits = np.zeros(360, dtype=bool)
+
+    for offset in range(-4, 5):
+        r = radius * 0.94 + offset
+        xs = np.rint(cx + r * np.cos(angles)).astype(int)
+        ys = np.rint(cy + r * np.sin(angles)).astype(int)
+        valid = (xs >= 0) & (xs < width) & (ys >= 0) & (ys < height)
+        hits = np.zeros(360, dtype=bool)
+        idx = np.where(valid)[0]
+        hits[idx] = edges[ys[idx], xs[idx]] > 0
+        rim_hits |= hits
+
+    rim_coverage = float(np.mean(rim_hits))
+    rim_sectors = sum(
+        np.mean(rim_hits[i:i + 45]) > 0.18 for i in range(0, 360, 45)
+    )
+
+    face_mask = np.zeros_like(gray, dtype=np.uint8)
+    cv2.circle(face_mask, (cx, cy), int(radius * 0.88), 255, -1)
+    cv2.circle(face_mask, (cx, cy), int(radius * 0.55), 0, -1)
+    face_edges = cv2.bitwise_and(edges, edges, mask=face_mask)
+
+    face_sectors = 0
+    for i in range(8):
+        sector = np.zeros_like(gray, dtype=np.uint8)
+        cv2.ellipse(
+            sector, (cx, cy),
+            (int(radius * 0.88), int(radius * 0.88)),
+            0, i * 45, (i + 1) * 45, 255, -1
+        )
+        inner = np.zeros_like(gray, dtype=np.uint8)
+        cv2.circle(inner, (cx, cy), int(radius * 0.55), 255, -1)
+        sector = cv2.bitwise_and(sector, cv2.bitwise_not(inner))
+        count = cv2.countNonZero(cv2.bitwise_and(face_edges, face_edges, mask=sector))
+        if count > radius * 0.20:
+            face_sectors += 1
+
+    return rim_coverage >= 0.30 and rim_sectors >= 6 and face_sectors >= 4
+
+
 def main():
 
     parser = argparse.ArgumentParser(
@@ -504,6 +549,7 @@ def main():
 
     args = parser.parse_args()
 
+    start_monitoring_server()
     cap = open_camera(args.camera)
 
     print("\nSMART INSPECTION HELMET")
@@ -522,6 +568,8 @@ def main():
     )
     shown_reading = None
     value_range = MAX_VALUE - MIN_VALUE
+    valid_frame_count = 0
+    stable_pressures = deque(maxlen=4)
 
     fps = 0
     previous_time = time.perf_counter()
@@ -585,6 +633,7 @@ def main():
                     shown_reading = None
 
             display = frame.copy()
+            angle = None
 
             if circle_tracker.locked:
 
@@ -724,6 +773,29 @@ def main():
             previous_time = current_time
 
             put_text(display, f"FPS: {fps:.1f}", 95, (255, 0, 0))
+
+            if circle_tracker.locked and angle is not None and shown_reading is not None:
+                cx, cy, radius = circle_tracker.as_int()
+                face_ok = validate_gauge_face(gray, cx, cy, radius)
+                stable_pressures.append(shown_reading)
+
+                pressure_stable = (
+                    len(stable_pressures) == 4 and
+                    max(stable_pressures) - min(stable_pressures) <= 0.35
+                )
+
+                if face_ok and pressure_stable:
+                    valid_frame_count += 1
+                else:
+                    valid_frame_count = 0
+
+                if valid_frame_count >= 4:
+                    save_reading(shown_reading, angle, display, UNIT)
+            else:
+                valid_frame_count = 0
+                stable_pressures.clear()
+
+            publish_frame(display)
 
             cv2.imshow(
                 "Smart Inspection Helmet - Live Gauge",
