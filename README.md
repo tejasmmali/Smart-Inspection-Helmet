@@ -10,6 +10,8 @@ A smart helmet project that uses computer vision to read analog gauges and monit
 * Logitech C270 Webcam
 * Laptop for development
 
+![Alt text for image](https://stardance.hackclub.com/rails/active_storage/representations/proxy/eyJfcmFpbHMiOnsiZGF0YSI6NTM1NTU2LCJwdXIiOiJibG9iX2lkIn19--8956d20fe029cdc7ba6b596f61f15a6d9e504c77/eyJfcmFpbHMiOnsiZGF0YSI6eyJmb3JtYXQiOiJ3ZWJwIiwicmVzaXplX3RvX2xpbWl0IjpbMTYwMCw5MDBdLCJzYXZlciI6eyJzdHJpcCI6dHJ1ZSwicXVhbGl0eSI6NzV9fSwicHVyIjoidmFyaWF0aW9uIn19--5394ecd620f1b8ee9be71be3f37cd22b8a88953c/WhatsApp%20Image%202026-11-01%20at%202.18.32%20AM.jpeg)
+
 ## Progress
 
 * [x] Set up Python environment
