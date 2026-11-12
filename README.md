@@ -41,5 +41,7 @@ A smart helmet project that uses computer vision to read analog gauges and monit
 Build a low-cost smart inspection helmet that automatically reads industrial gauges and helps workers monitor equipment.
 
 ## Links
-https://stardance.hackclub.com/projects/69752
+- [Youtube](https://youtu.be/O2CuzHTImEc)
+- [stardance](https://stardance.hackclub.com/projects/69752)
+- [Phantom ](https://phantom.hackclub.com/projects/3191)
 
