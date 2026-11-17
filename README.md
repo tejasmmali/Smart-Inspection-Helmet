@@ -78,7 +78,7 @@ Install any additional dependencies required by the web dashboard if applicable.
 
 ### 4. Connect the Webcam
 
-Connect the Logitech C270 webcam and make sure it is detected by your computer.
+Connect the  webcam and make sure it is detected by your computer. (use internal webcam if you have laptop)
 
 ### 5. Run the Project
 
