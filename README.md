@@ -46,7 +46,7 @@ A smart helmet project that uses computer vision to read analog gauges and monit
 ### 1. Clone the Repository
 
 ```bash
-git clone YOUR_GITHUB_REPOSITORY_URL
+git clone https://github.com/tejasmmali/Smart-Inspection-Helmet.git
 cd Smart-Inspection-Helmet
 ```
 
@@ -110,7 +110,7 @@ python gauge-read.py
 
 <img width="1493" height="664" alt="image" src="https://github.com/user-attachments/assets/bf142d2f-abda-40e7-a7bb-91d048ba716d" />
 
-### Added detection in webcam feed (Oct 1)
+### Added detection in webcam feed (Nov 1)
 
 <img width="1182" height="900" alt="image" src="https://github.com/user-attachments/assets/a1b3556b-b718-4161-8e06-b38b579df68a" />
 
